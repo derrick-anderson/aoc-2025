@@ -23,28 +23,23 @@ class Safe:
             self._rotate_left()
         else:
             print(f"Unsupported Roatation Direction :`{direction}`")
+            pass
 
     def _rotate_left(self) -> None:
-        print("Rotating Left")
-        print(f"Dial Was : {self.get_dial()}")
         self._dial -= 1
         if self._dial < 0:
             self._dial = self._dial + 100
-        print(f"Dial is :{self.get_dial()}")
 
     def _rotate_right(self) -> None:
-        print("Rotating Right")
-        print(f"Dial Was : {self.get_dial()}")
         self._dial += 1
         if self.get_dial() > 99:
             self._dial = self._dial - 100
-        print(f"Dial is :{self.get_dial()}")
 
 
 def get_instructions() -> List[str]:
     instructions = list()
     with open(os.path.join(base_path, "input.txt"), "r") as input:
-        instructions = input.readlines()
+        instructions = [line.strip() for line in input.readlines() if line]
 
     print(f"Returning {len(instructions)} instructions.")
     return instructions
@@ -63,7 +58,7 @@ if __name__ == "__main__":
         stripped_instruction = instruction.strip()
         direction = stripped_instruction[0:1]
         count = int(stripped_instruction[1:])
-        print(f"Rotating Dial `{count}` Clicks to the `{direction}`")
+
         for click in range(count):
             safe.rotate_dial(direction=direction)
             if safe.get_dial() == 0:
